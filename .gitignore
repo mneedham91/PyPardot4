@@ -1,0 +1,14 @@
+# Python byte code files
+*.pyc
+
+# Emacs save files
+*~
+
+# OSX directory meta files
+.DS_Store
+
+# Python egg metadata
+*.egg-info
+
+# PyCharm / Jetbrains IDE
+.idea
