@@ -23,17 +23,7 @@ class DynamicContent(object):
 
         return result
 
-    def create_by_email(self, prospect_email=None, name=None, value=None, probability=None, **kwargs):
-        """
-        Creates a new opportunity using the specified data. <prospect_email> must correspond to an existing prospect.
-        """
-        kwargs.update({'name': name, 'value': value, 'probability': probability})
-        response = self._post(
-            path='/do/create/prospect_email/{prospect_email}'.format(prospect_email=prospect_email),
-            params=kwargs)
-        return response
-
-    def read(self, id=None):
+def read(self, id=None):
         """
         Returns the data for the dynamic content specified by <id>. <id> is the Pardot ID of the target dynamic content.
         """
