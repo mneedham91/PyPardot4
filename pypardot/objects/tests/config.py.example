@@ -1,0 +1,3 @@
+PARDOT_USER = 'pardot_account_email@example.com'
+PARDOT_PASSWORD = 'The Sooper Secret Password 99'
+PARDOT_USER_KEY = 'Pardot user key for the user'
