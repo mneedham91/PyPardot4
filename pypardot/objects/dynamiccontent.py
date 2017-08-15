@@ -22,8 +22,8 @@ class DynamicContent(object):
             result['dynamicContent'] = [result['dynamicContent']]
 
         return result
-
-def read(self, id=None):
+    
+    def read(self, id=None):
         """
         Returns the data for the dynamic content specified by <id>. <id> is the Pardot ID of the target dynamic content.
         """
