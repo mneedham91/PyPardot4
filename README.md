@@ -2,22 +2,22 @@ PyPardot4
 =========
 
 PyPardot was originally created by Josh Geller as a wrapper for Version 3 of the Pardot API.
-I, Matt Needham, have edited PyPardot for compability with Version 4 of the Pardot API.
-Version 4 accomodates multiple prospects with the same email address. If your Pardot org does not have this featured enabled, you must use version 3.
+I, Matt Needham, have edited PyPardot for compatibility with Version 4 of the Pardot API.
+Version 4 accommodates multiple prospects with the same email address. If your Pardot org does not have this featured enabled, you must use version 3.
 To determine if your Pardot org has this feature enabled, [check out this guide](http://developer.pardot.com/kb/api-version-4/)
 
 PyPardot is an API wrapper for [Pardot](http://www.pardot.com/), written in Python.
 
 Using it is simple:
 
-```
+```python
 from pypardot.client import PardotAPI
 
 p = PardotAPI(
-                email='email@email.com',
-                password='password',
-                user_key='e9ecc2465934de0d0847dead882a6655'
-                )
+    email='email@email.com',
+    password='password',
+    user_key='e9ecc2465934de0d0847dead882a6655'
+)
                 
 p.authenticate()
 
