@@ -16,7 +16,7 @@ from pypardot.client import PardotAPI
 p = PardotAPI(
     email='email@email.com',
     password='password',
-    user_key='e9ecc2465934de0d0847dead882a6655'
+    user_key='userkey'
 )
                 
 p.authenticate()
