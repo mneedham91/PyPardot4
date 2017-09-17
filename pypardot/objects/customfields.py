@@ -37,7 +37,7 @@ class CustomFields(object):
         response = self._post(path='/do/read/id/{id}'.format(id=id))
         return response
 
-    def update(self, id=None):
+    def update(self, id=None, **kwargs):
         """
         Updates the provided data for the custom field specified by <id>. <id> is the Pardot ID of the custom field.
         Refer to Custom Field in Object Field References for more details. Returns the updated version of the custom field.

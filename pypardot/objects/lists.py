@@ -30,14 +30,14 @@ class Lists(object):
         response = self._post(path='/do/read/id/{id}'.format(id=id))
         return response
 
-    def update(self, id=None):
+    def update(self, id=None, **kwargs):
         """
         Updates the provided data for the list specified by <id>. <id> is the Pardot ID of the list.
         """
         response = self._post(path='/do/update/id/{id}'.format(id=id))
         return response
     
-    def create(self):
+    def create(self, **kwargs):
         """
         Creates a new list using the specified data.
         """

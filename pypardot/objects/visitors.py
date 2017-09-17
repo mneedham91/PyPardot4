@@ -25,8 +25,7 @@ class Visitors(object):
 
     def assign(self, id=None, **kwargs):
         """
-        Assigns or reassigns the visitor specified by <id> to a specified prospect. One (and only one) of the
-        following parameters must be provided to identify the target prospect: <prospect_email> or <prospect_id>.
+        Assigns or reassigns the visitor specified by <id> to a prospect specified by <prospect_id>.
         Returns an updated version of the visitor.
         """
         response = self._post(path='/do/assign/id/{id}'.format(id=id), params=kwargs)
