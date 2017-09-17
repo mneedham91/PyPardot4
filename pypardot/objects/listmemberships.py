@@ -33,7 +33,7 @@ class ListMemberships(object):
             raise PardotAPIArgumentError('a list ID is required to create a list membership.')
         if not prospect_id:
             raise PardotAPIArgumentError('a prospect ID is required to create a list membership.')
-        response = self._post(path='/do/create/list_id/{email}/prospect_id/{prospect_id}'.format(list_id=list_id,prospect_id=prospect_id), params=kwargs)
+        response = self._post(path='/do/create/list_id/{list_id}/prospect_id/{prospect_id}'.format(list_id=list_id,prospect_id=prospect_id), params=kwargs)
         return response
     
     def read(self, list_id=None, prospect_id=None, **kwargs):
