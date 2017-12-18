@@ -1,4 +1,4 @@
-#from .errors import PardotAPIArgumentError
+from ..errors import PardotAPIArgumentError
 
 
 class Prospects(object):
@@ -63,7 +63,7 @@ class Prospects(object):
             raise PardotAPIArgumentError('email is required to create a prospect.')
         response = self._post(path='/do/create/email/{email}'.format(email=email), params=kwargs)
         return response
-    
+
     def batchCreate(self, **kwargs):
         """
         Creates new prospects using the provided <data> in either XML or JSON.
@@ -113,7 +113,7 @@ class Prospects(object):
             raise PardotAPIArgumentError('id is required to update a prospect.')
         response = self._post(path='/do/update/id/{id}'.format(id=id), params=kwargs)
         return response
-    
+
     def batchUpdate(self, **kwargs):
         """
         Updates prospects using the provided <data> in either XML or JSON.
@@ -144,7 +144,7 @@ class Prospects(object):
             raise PardotAPIArgumentError('id is required to upsert a prospect.')
         response = self._post(path='/do/upsert/id/{id}'.format(id=id), params=kwargs)
         return response
-    
+
     def upsert_by_fid(self, fid=None, **kwargs):
         """
         Updates the provided data for the prospect specified by <fid>. If an <email> value is provided, it is used to
@@ -156,7 +156,7 @@ class Prospects(object):
             raise PardotAPIArgumentError('CRM FID is required to upsert a prospect.')
         response = self._post(path='/do/upsert/fid/{fid}'.format(fid=fid), params=kwargs)
         return response
-    
+
     def batchUpsert(self, **kwargs):
         """
         Updates prospects using the provided <data> in either XML or JSON.
