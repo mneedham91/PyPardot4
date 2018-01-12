@@ -35,11 +35,12 @@ BASE_URI = 'https://pi.pardot.com'
 
 
 class PardotAPI(object):
-    def __init__(self, email, password, user_key):
+    def __init__(self, email, password, user_key, version=4):
         self.email = email
         self.password = password
         self.user_key = user_key
         self.api_key = None
+        self.version = version
         self.accounts = Accounts(self)
         self.campaigns = Campaigns(self)
         self.customfields = CustomFields(self)
@@ -74,7 +75,7 @@ class PardotAPI(object):
         params.update({'user_key': self.user_key, 'api_key': self.api_key, 'format': 'json'})
         try:
             self._check_auth(object_name=object_name)
-            request = requests.post(self._full_path(object_name, path), params=params)
+            request = requests.post(self._full_path(object_name, self.version, path), params=params)
             response = self._check_response(request)
             return response
         except PardotAPIError as err:
@@ -95,7 +96,7 @@ class PardotAPI(object):
         params.update({'user_key': self.user_key, 'api_key': self.api_key, 'format': 'json'})
         try:
             self._check_auth(object_name=object_name)
-            request = requests.get(self._full_path(object_name, path), params=params)
+            request = requests.get(self._full_path(object_name, self.version, path), params=params)
             response = self._check_response(request)
             return response
         except PardotAPIError as err:
@@ -120,7 +121,7 @@ class PardotAPI(object):
             raise err
 
     @staticmethod
-    def _full_path(object_name, path=None, version=4):
+    def _full_path(object_name, version, path=None):
         """Builds the full path for the API request"""
         full = '{0}/api/{1}/version/{2}'.format(BASE_URI, object_name, version)
         if path:
