@@ -1,3 +1,6 @@
+from ..errors import PardotAPIArgumentError
+
+
 class EmailTemplates(object):
     """
     A class to query and use Pardot email templates.

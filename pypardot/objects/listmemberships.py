@@ -1,3 +1,6 @@
+from ..errors import PardotAPIArgumentError
+
+
 class ListMemberships(object):
     """
     A class to query and use Pardot list memberships.
@@ -35,7 +38,7 @@ class ListMemberships(object):
             raise PardotAPIArgumentError('a prospect ID is required to create a list membership.')
         response = self._post(path='/do/create/list_id/{list_id}/prospect_id/{prospect_id}'.format(list_id=list_id,prospect_id=prospect_id), params=kwargs)
         return response
-    
+
     def read(self, list_id=None, prospect_id=None, **kwargs):
         """
         Returns the data for the list membership specified by <list_id> and <prospect_id>.
@@ -48,7 +51,7 @@ class ListMemberships(object):
             raise PardotAPIArgumentError('a prospect id is required to read a list membership.')
         response = self._post(path='/do/read/list_id/{list_id}/prospect_id/{prospect_id}'.format(list_id=list_id,prospect_id=prospect_id), params=kwargs)
         return response
-    
+
     def read_by_id(self, id=None, **kwargs):
         """
         Returns the data for the list membership specified by <id>. <id> is the Pardot ID of the target list membership.
