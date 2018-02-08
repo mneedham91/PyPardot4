@@ -99,7 +99,7 @@ class Prospects(object):
         Updates the provided data for a prospect specified by <fid>. <fid> is the Pardot CRM FID of the
         prospect. Fields that are not updated by the request remain unchanged.
         """
-        if not email:
+        if not fid:
             raise PardotAPIArgumentError('CRM FID is required to update a prospect.')
         response = self._post(path='/do/update/fid/{fid}'.format(fid=fid), params=kwargs)
         return response
