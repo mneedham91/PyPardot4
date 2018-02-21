@@ -43,7 +43,7 @@ class Emails(object):
     
     def stats(self, list_email_id=None):
         """Returns the statistical data for the list email specified by <list_email_id>. <list_email_id> is the Pardot ID of the target email."""
-        response = self._post(path='/do/read/id/{list_email_id}'.format(list_email_id=list_email_id))
+        response = self._post(path='/do/stats/id/{list_email_id}'.format(list_email_id=list_email_id))
         return response
 
     def _get(self, object_name='email', path=None, params=None):
