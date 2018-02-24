@@ -93,6 +93,18 @@ class Prospects(object):
             raise PardotAPIArgumentError('id is required to read a prospect.')
         response = self._post(path='/do/read/id/{id}'.format(id=id), params=kwargs)
         return response
+    
+    def read_by_fid(self, fid=None, **kwargs):
+        """
+        Returns data for the prospect specified by <fid>. <fid> must be a valid CRM FID.
+        This data includes campaign assignment, profile criteria matching statuses, associated
+        visitor activities, email list subscriptions, and custom field data. <id> is the Pardot
+        ID of the target prospect.
+        """
+        if not fid:
+            raise PardotAPIArgumentError('CRM FID is required.')
+        response = self._post(path='/do/read/fid/{fid}'.format(fid=fid), params=kwargs)
+        return response
 
     def update_by_fid(self, fid=None, **kwargs):
         """
@@ -215,3 +227,4 @@ class Prospects(object):
             params = {}
         response = self.client.post(object_name=object_name, path=path, params=params)
         return response
+
