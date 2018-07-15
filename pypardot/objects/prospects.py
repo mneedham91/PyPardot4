@@ -19,10 +19,11 @@ class Prospects(object):
 
         # Ensure result['prospect'] is a list, no matter what.
         result = response.get('result')
-        if result['total_results'] == 0:
-            result['prospect'] = []
-        elif result['total_results'] == 1:
-            result['prospect'] = [result['prospect']]
+        if 'output' not in kwargs.keys() and 'bulk' not in kwargs.values():
+            if result['total_results'] == 0:
+                result['prospect'] = []
+            elif result['total_results'] == 1:
+                result['prospect'] = [result['prospect']]
 
         return result
 

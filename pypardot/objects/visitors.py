@@ -16,10 +16,11 @@ class Visitors(object):
 
         # Ensure result['visitor'] is a list, no matter what.
         result = response.get('result')
-        if result['total_results'] == 0:
-            result['visitor'] = []
-        elif result['total_results'] == 1:
-            result['visitor'] = [result['visitor']]
+        if 'output' not in kwargs.keys() and 'bulk' not in kwargs.values():
+            if result['total_results'] == 0:
+                result['visitor'] = []
+            elif result['total_results'] == 1:
+                result['visitor'] = [result['visitor']]
 
         return result
 
