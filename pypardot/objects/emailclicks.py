@@ -17,9 +17,9 @@ class EmailClicks(object):
         # Ensure result['emailClicks'] is a list, no matter what.
         result = response.get('result')
         if result['total_results'] == 0:
-            result['emailClicks'] = []
+            result['emailClick'] = []
         elif result['total_results'] == 1:
-            result['emailClicks'] = [result['emailClicks']]
+            result['emailClick'] = [result['emailClick']]
 
         return result
 
