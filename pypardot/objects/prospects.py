@@ -132,7 +132,7 @@ class Prospects(object):
         Updates prospects using the provided <data> in either XML or JSON.
         See Endpoints for Batch Processing: http://developer.pardot.com/kb/api-version-4/prospects/#endpoints-for-batch-processing
         """
-        response = self._post(path='/do/batchCreate', params=kwargs)
+        response = self._post(path='/do/batchUpdate', params=kwargs)
         return response
 
     def upsert_by_email(self, email=None, **kwargs):
