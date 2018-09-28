@@ -34,14 +34,14 @@ class Lists(object):
         """
         Updates the provided data for the list specified by <id>. <id> is the Pardot ID of the list.
         """
-        response = self._post(path='/do/update/id/{id}'.format(id=id))
+        response = self._post(path='/do/update/id/{id}'.format(id=id), params=kwargs)
         return response
-    
+
     def create(self, **kwargs):
         """
         Creates a new list using the specified data.
         """
-        response = self._post(path='/do/create')
+        response = self._post(path='/do/create', params=kwargs)
         return response
 
     def delete(self, id=None):
