@@ -56,9 +56,11 @@ class Emails(object):
         response = self.client.get(object_name=object_name, path=path, params=params)
         return response
 
-    def _post(self, object_name='email', path=None, params=None):
+    def _post(self, object_name='email', path=None, params=None, data=None):
         """POST requests for the Email object."""
         if params is None:
             params = {}
-        response = self.client.post(object_name=object_name, path=path, params=params)
+        if data is None:
+            data = {}
+        response = self.client.post(object_name=object_name, path=path, params=params, data=data)
         return response
