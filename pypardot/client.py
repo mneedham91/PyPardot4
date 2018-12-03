@@ -64,7 +64,7 @@ class PardotAPI(object):
         self.visitors = Visitors(self)
         self.visitoractivities = VisitorActivities(self)
 
-    def post(self, object_name, path=None, params=None, retries=0):
+    def post(self, object_name, path=None, params=None, data=None, retries=0):
         """
         Makes a POST request to the API. Checks for invalid requests that raise PardotAPIErrors. If the API key is
         invalid, one re-authentication request is made, in case the key has simply expired. If no errors are raised,
@@ -73,9 +73,11 @@ class PardotAPI(object):
         if params is None:
             params = {}
         params.update({'user_key': self.user_key, 'api_key': self.api_key, 'format': 'json'})
+        if data is None:
+            data = {}
         try:
             self._check_auth(object_name=object_name)
-            request = requests.post(self._full_path(object_name, self.version, path), params=params)
+            request = requests.post(self._full_path(object_name, self.version, path), params=params, data=data)
             response = self._check_response(request)
             return response
         except PardotAPIError as err:

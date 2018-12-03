@@ -30,17 +30,20 @@ class Emails(object):
         """
         Sends an email to the lists identified by list_ids[].
         Required parameters: (email_template_id OR (text_content, name, subject, & ((from_email & from_name) OR from_user_id)))
+
+        The API requires some parameters (like html_content) to be send in the body of the POST. Sometimes.
+        Maybe on Wednesdays. Located entirely within this endpoint.
         """
         kwargs['list_ids'] = kwargs.get('list_ids', None)
         response = self._post(
-            path='/do/send/', params=kwargs)
+            path='/do/send/', data=kwargs)
         return response
 
     def read(self, email_id=None):
         """Returns the data for the email specified by <email_id>. <email_id> is the Pardot ID of the target email."""
         response = self._post(path='/do/read/id/{email_id}'.format(email_id=email_id))
         return response
-    
+
     def stats(self, list_email_id=None):
         """Returns the statistical data for the list email specified by <list_email_id>. <list_email_id> is the Pardot ID of the target email."""
         response = self._post(path='/do/stats/id/{list_email_id}'.format(list_email_id=list_email_id))
@@ -53,9 +56,11 @@ class Emails(object):
         response = self.client.get(object_name=object_name, path=path, params=params)
         return response
 
-    def _post(self, object_name='email', path=None, params=None):
+    def _post(self, object_name='email', path=None, params=None, data=None):
         """POST requests for the Email object."""
         if params is None:
             params = {}
-        response = self.client.post(object_name=object_name, path=path, params=params)
+        if data is None:
+            data = {}
+        response = self.client.post(object_name=object_name, path=path, params=params, data=data)
         return response
