@@ -12,7 +12,7 @@ class Campaigns(object):
         Returns the campaigns matching the specified criteria parameters.
         Supported search criteria: http://developer.pardot.com/kb/api-version-4/campaigns/#supported-search-criteria
         """
-        response = self._get(path='/do/query', params=kwargs)
+        response = self._post(path='/do/query', params=kwargs)
 
         # Ensure result['campaign'] is a list, no matter what.
         result = response.get('result')

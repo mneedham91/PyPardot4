@@ -75,7 +75,8 @@ class PardotAPI(object):
         params.update({'user_key': self.user_key, 'api_key': self.api_key, 'format': 'json'})
         try:
             self._check_auth(object_name=object_name)
-            request = requests.post(self._full_path(object_name, self.version, path), params=params)
+            headers = {'api_key': self.api_key, 'user_key': self.user_key }
+            request = requests.post(self._full_path(object_name, self.version, path), data=params, headers=headers)
             response = self._check_response(request)
             return response
         except PardotAPIError as err:
