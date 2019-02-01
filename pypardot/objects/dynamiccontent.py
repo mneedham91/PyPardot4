@@ -12,7 +12,7 @@ class DynamicContent(object):
         Returns the dynamic content matching the specified criteria parameters.
         Supported search criteria: http://developer.pardot.com/kb/api-version-4/dynamic-content/#supported-search-criteria
         """
-        response = self._get(path='/do/query', params=kwargs)
+        response = self._post(path='/do/query', params=kwargs)
 
         # Ensure result['dynamicContent'] is a list, no matter what.
         result = response.get('result')
