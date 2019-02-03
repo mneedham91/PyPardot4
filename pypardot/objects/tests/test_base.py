@@ -10,11 +10,13 @@ try:
 except SystemError as e:
 	CONFIG_EXISTS = False
 
+TEST_STRING_PREFIX = 'PyPardot Test'
+TEST_BOOLEAN_VALUE = False
+
 # VALUES WITH * have to be individually tested as they are not generic
 # e.g. may have multiple sets of parameters with available operations
 # or input parameter set may be different, etc.
-
-API_SUPPORTED_OPERATIONS = {
+SUPPORTED_API_OPERATIONS = {
 	'account': ['read'],
 	'campaign': ['query', 'read', 'update', 'create'],
 	'customField': ['query', 'read', 'update', 'create', 'delete'],
@@ -83,7 +85,20 @@ def pluralize(singular):
 
 
 @unittest.skipUnless(CONFIG_EXISTS, 'Requires Pardot configuration in config.py')
-class TestGenericApiOperations(unittest.TestCase):
+class MyBaseTestCase(unittest.TestCase):
+	@classmethod
+	def setUpClass(cls):
+		"""On inherited classes, run our `setUp` method"""
+		# Inspired via http://stackoverflow.com/questions/1323455/python-unit-test-with-base-and-sub-class/17696807#17696807
+		if cls is not MyBaseTestCase and cls.setUp is not MyBaseTestCase.setUp:
+			orig_setUp = cls.setUp
+
+			def setUpOverride(self, *args, **kwargs):
+				MyBaseTestCase.setUp(self)
+				return orig_setUp(self, *args, **kwargs)
+
+			cls.setUp = setUpOverride
+
 	def setUp(self):
 		self.pardot = PardotAPI(email=PARDOT_USER, password=PARDOT_PASSWORD, user_key=PARDOT_USER_KEY)
 		self.pardot.authenticate()
@@ -91,30 +106,17 @@ class TestGenericApiOperations(unittest.TestCase):
 	def tearDown(self):
 		pass
 
-	def test_query(self):
-		method = 'query'
-		errors = {}
+	def init_object(self, field_map):
+		obj = {}
+		for k, v in field_map.iteritems():
+			if k in set(['id','created_at','updated_at']):
+				continue
+			else:
+				if v['datatype'] == 'string':
+					obj[k] = '{} {}'.format(TEST_STRING_PREFIX, k.capitalize())
+				elif v['datatype'] == 'boolean':
+					obj[k] = TEST_BOOLEAN_VALUE
+				else:
+					raise Exception('unrecognized datatype {}'.format(v['datatype']))
 
-		for obj_name in sorted(API_SUPPORTED_OPERATIONS.iterkeys()):
-			ops = API_SUPPORTED_OPERATIONS[obj_name]
-			if method in set(ops):
-				print "[{}.{}]...".format(obj_name, method)
-				obj = getattr(self.pardot, pluralize(obj_name).lower())
-				try:
-					results = getattr(obj, method)(id_greater_than='0')
-					key_name = obj_name
-					if obj_name == 'listMembership':
-						key_name = 'list_membership'
-					elif obj_name == 'visitorActivity':
-						key_name = 'visitor_activity'
-					results_length = len(results[key_name])
-					total = results['total_results']
-					print "[{}.{}] SUCCESS returned {} of {} total results".format(
-						obj_name, method, results_length, total)
-					self.assertTrue(total >= 0)
-				except PardotAPIError as err:
-					print "[{}.{}] API_ERROR {}".format(obj_name, method, err.message)
-					errors[obj_name] = err.message
-
-		if len(errors.keys()) > 0:
-			self.assertTrue(False)
+		return obj
