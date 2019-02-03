@@ -98,7 +98,7 @@ class TestProspects(MyBaseTestCase):
 		self.assertTrue(delete_res)
 
 	def test_prospect_delete(self):
-		results = self.pardot.prospects.query(email=self._data['email'], updated_after='yesterday')
+		results = self.pardot.prospects.query(updated_after='yesterday')
 		total = 0
 		test_total = 0
 		not_test_total = 0
@@ -110,7 +110,7 @@ class TestProspects(MyBaseTestCase):
 				continue
 			if not result['email'].endswith('@harbles.com'):
 				not_test_total = not_test_total + 1
-				print('NONTEST REC ID: {}, Email: {}, Website: {}'.format(
+				print('NON-TEST REC ID: {}, Email: {}, Website: {}'.format(
 					result['id'], result['email'], result['website']))
 			else:
 				# ensure all existing prospect test accounts are removed
