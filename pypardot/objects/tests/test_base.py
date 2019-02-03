@@ -43,45 +43,34 @@ SUPPORTED_API_OPERATIONS = {
 	'visit': ['query*', 'read']
 }
 
-ABERRANT_PLURAL_MAP = {
-	'dynamicContent': 'dynamicContent',
+OBJECT_FIELD_MAP = {
+	'list': {
+		'id': {'datatype': 'integer', 'required': True, 'editable': False},
+		'name': {'datatype': 'string', 'required': False, 'editable': True},
+		'is_public': {'datatype': 'boolean', 'required': False, 'editable': True},
+		'is_dynamic': {'datatype': 'boolean', 'required': False, 'editable': False},
+		'title': {'datatype': 'string', 'required': False, 'editable': True},
+		'description': {'datatype': 'string', 'required': False, 'editable': True},
+		'is_crm_visible': {'datatype': 'boolean', 'required': False, 'editable': True},
+		'created_at': {'datatype': 'timestamp', 'required': False, 'editable': False},
+		'updated_at': {'datatype': 'timestamp', 'required': False, 'editable': False},
+	},
+	'listMembership': {
+		'id': {'datatype': 'integer', 'required': True, 'editable': False},
+		'list_id': {'datatype': 'integer', 'required': True, 'editable': False, 'fk': 'List'},
+		'prospect_id': {'datatype': 'integer', 'required': True, 'editable': False, 'fk': 'Prospect'},
+		'opted_out': {'datatype': 'integer', 'required': False, 'editable': True},
+		'created_at': {'datatype': 'timestamp', 'required': False, 'editable': False},
+		'updated_at': {'datatype': 'timestamp', 'required': False, 'editable': False},
+	},
+	'prospect': {
+		'id': {'datatype': 'integer', 'required': True, 'editable': False},
+		'campaign_id': {'datatype': 'integer', 'required': False, 'editable': True, 'fk': 'Campaign'},
+		'first_name': {'datatype': 'string', 'required': False, 'editable': True},
+		'last_name': {'datatype': 'string', 'required': False, 'editable': True},
+		'email': {'datatype': 'string', 'required': True, 'editable': True},
+	},
 }
-
-VOWELS = set('aeiou')
-
-
-def pluralize(singular):
-	"""Return plural form of given lowercase singular word (English only). Snatched from:
-	http://code.activestate.com/recipes/577781-pluralize-word-convert-singular-word-to-its-plural/
-	"""
-	if not singular:
-		return ''
-	plural = ABERRANT_PLURAL_MAP.get(singular)
-	if plural:
-		return plural
-	root = singular
-	try:
-		if singular[-1] == 'y' and singular[-2] not in VOWELS:
-			root = singular[:-1]
-			suffix = 'ies'
-		elif singular[-1] == 's':
-			if singular[-2] in VOWELS:
-				if singular[-3:] == 'ius':
-					root = singular[:-2]
-					suffix = 'i'
-				else:
-					root = singular[:-1]
-					suffix = 'ses'
-			else:
-				suffix = 'es'
-		elif singular[-2:] in ('ch', 'sh'):
-			suffix = 'es'
-		else:
-			suffix = 's'
-	except IndexError:
-		suffix = 's'
-	plural = root + suffix
-	return plural
 
 
 @unittest.skipUnless(CONFIG_EXISTS, 'Requires Pardot configuration in config.py')
@@ -106,17 +95,19 @@ class MyBaseTestCase(unittest.TestCase):
 	def tearDown(self):
 		pass
 
-	def init_object(self, field_map):
-		obj = {}
+	def init_object_data(self, field_map):
+		data = {}
 		for k, v in field_map.iteritems():
-			if k in set(['id','created_at','updated_at']):
+			if k in set(['id', 'created_at', 'updated_at']):
 				continue
 			else:
 				if v['datatype'] == 'string':
-					obj[k] = '{} {}'.format(TEST_STRING_PREFIX, k.capitalize())
+					data[k] = '{} {}'.format(TEST_STRING_PREFIX, k.capitalize())
 				elif v['datatype'] == 'boolean':
-					obj[k] = TEST_BOOLEAN_VALUE
+					data[k] = TEST_BOOLEAN_VALUE
+				elif v['datatype'] == 'integer' and 'fk' in v:
+					data[k] = 1
 				else:
 					raise Exception('unrecognized datatype {}'.format(v['datatype']))
 
-		return obj
+		return data

@@ -1,19 +1,7 @@
 import unittest
 
 from pypardot.errors import PardotAPIArgumentError, PardotAPIError
-from .test_base import MyBaseTestCase, SUPPORTED_API_OPERATIONS, CONFIG_EXISTS, pluralize
-
-OBJECT_FIELD_MAP = {
-	'id': {'datatype': 'integer', 'required': True, 'editable': False},
-	'name': {'datatype': 'string', 'required': False, 'editable': True},
-	'is_public': {'datatype': 'boolean', 'required': False, 'editable': True},
-	'is_dynamic': {'datatype': 'boolean', 'required': False, 'editable': False},
-	'title': {'datatype': 'string', 'required': False, 'editable': True},
-	'description': {'datatype': 'string', 'required': False, 'editable': True},
-	'is_crm_visible': {'datatype': 'boolean', 'required': False, 'editable': True},
-	'created_at': {'datatype': 'timestamp', 'required': False, 'editable': False},
-	'updated_at': {'datatype': 'timestamp', 'required': False, 'editable': False},
-}
+from .test_base import MyBaseTestCase, OBJECT_FIELD_MAP, CONFIG_EXISTS
 
 
 @unittest.skipUnless(CONFIG_EXISTS, 'Requires Pardot configuration in config.py')
@@ -21,7 +9,7 @@ class TestLists(MyBaseTestCase):
 	_data = {}
 
 	def setUp(self):
-		self._data = self.init_object(OBJECT_FIELD_MAP)
+		self._data = self.init_object_data(OBJECT_FIELD_MAP['list'])
 
 		# create a list for testing
 		try:
