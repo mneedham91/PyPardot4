@@ -1,45 +1,7 @@
 import unittest
 
-from pypardot.client import PardotAPI
 from pypardot.errors import PardotAPIArgumentError, PardotAPIError
-
-try:
-	from pypardot.objects.tests.config import *
-
-	CONFIG_EXISTS = True
-except SystemError as e:
-	CONFIG_EXISTS = False
-
-# VALUES WITH * have to be individually tested as they are not generic
-# e.g. may have multiple sets of parameters with available operations
-# or input parameter set may be different, etc.
-
-API_SUPPORTED_OPERATIONS = {
-	'account': ['read'],
-	'campaign': ['query', 'read', 'update', 'create'],
-	'customField': ['query', 'read', 'update', 'create', 'delete'],
-	'customRedirect': ['query', 'read'],
-	'dynamicContent': ['query', 'read'],
-	'email': ['read', 'stats'],
-	'emailClick': ['query'],
-	'emailTemplate': ['read', 'listOneToOne'],
-	'form': ['query', 'read'],
-	'lifecycleHistory': ['query', 'read'],
-	'lifecycleStage': ['query'],
-	'list': ['query', 'read', 'update', 'create', 'delete'],
-	'listMembership': ['query', 'read*', 'create', 'update*', 'delete'],
-	'opportunity': ['query', 'create*', 'read', 'update', 'delete', 'undelete'],
-	'prospect': [
-		'query', 'assign*', 'unassign*', 'create', 'batchCreate', 'read*', 'update*', 'batchUpdate', 'upsert',
-		'batchUpsert', 'delete*'],
-	'prospectAccount': ['query', 'create', 'describe', 'read', 'update', 'assign'],
-	'tag': ['query', 'read'],
-	'tagObject': ['query', 'read'],
-	'user': ['query', 'read*'],
-	'visitor': ['query', 'assign', 'read'],
-	'visitorActivity': ['query', 'read'],
-	'visit': ['query*', 'read']
-}
+from .test_base import MyBaseTestCase, SUPPORTED_API_OPERATIONS, CONFIG_EXISTS
 
 ABERRANT_PLURAL_MAP = {
 	'dynamicContent': 'dynamicContent',
@@ -83,20 +45,19 @@ def pluralize(singular):
 
 
 @unittest.skipUnless(CONFIG_EXISTS, 'Requires Pardot configuration in config.py')
-class TestGenericApiOperations(unittest.TestCase):
+class TestGenericOps(MyBaseTestCase):
 	def setUp(self):
-		self.pardot = PardotAPI(email=PARDOT_USER, password=PARDOT_PASSWORD, user_key=PARDOT_USER_KEY)
-		self.pardot.authenticate()
+		pass
 
 	def tearDown(self):
 		pass
 
-	def test_query(self):
+	def test_all_query(self):
 		method = 'query'
 		errors = {}
 
-		for obj_name in sorted(API_SUPPORTED_OPERATIONS.iterkeys()):
-			ops = API_SUPPORTED_OPERATIONS[obj_name]
+		for obj_name in sorted(SUPPORTED_API_OPERATIONS.iterkeys()):
+			ops = SUPPORTED_API_OPERATIONS[obj_name]
 			if method in set(ops):
 				print "[{}.{}]...".format(obj_name, method)
 				obj = getattr(self.pardot, pluralize(obj_name).lower())
