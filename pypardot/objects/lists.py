@@ -12,7 +12,7 @@ class Lists(object):
         Returns the lists matching the specified criteria parameters.
         Supported search criteria: http://developer.pardot.com/kb/api-version-3/lists/#supported-search-criteria
         """
-        response = self._post(path='/do/query', params=kwargs)
+        response = self._get(path='/do/query', params=kwargs)
 
         # Ensure result['list'] is a list, no matter what.
         result = response.get('result')

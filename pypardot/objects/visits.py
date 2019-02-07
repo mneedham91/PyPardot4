@@ -10,7 +10,7 @@ class Visits(object):
     def query_by_ids(self, ids=None, **kwargs):
         """Returns the visits matching the given <ids>. The <ids> should be comma separated integers (no spaces)."""
         kwargs['ids'] = ids.replace(' ', '')
-        response = self._post(path='/do/query', params=kwargs)
+        response = self._get(path='/do/query', params=kwargs)
 
         # Ensure result['visit'] is a list, no matter what.
         result = response.get('result')
@@ -27,7 +27,7 @@ class Visits(object):
         (no spaces).
         """
         kwargs['visitor_ids'] = visitor_ids.replace(' ', '')
-        response = self._post(path='/do/query', params=kwargs)
+        response = self._get(path='/do/query', params=kwargs)
 
         # Ensure result['visit'] is a list, no matter what.
         result = response.get('result')

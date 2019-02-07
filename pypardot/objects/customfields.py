@@ -12,7 +12,7 @@ class CustomFields(object):
         Returns the custom fields matching the specified criteria parameters.
         Supported search criteria: http://developer.pardot.com/kb/api-version-4/custom-fields/#supported-search-criteria
         """
-        response = self._post(path='/do/query', params=kwargs)
+        response = self._get(path='/do/query', params=kwargs)
 
         # Ensure result['customField'] is a list, no matter what.
         result = response.get('result')
