@@ -75,7 +75,7 @@ class PardotAPI(object):
         params.update({'user_key': self.user_key, 'api_key': self.api_key, 'format': 'json'})
         try:
             self._check_auth(object_name=object_name)
-            request = requests.post(self._full_path(object_name, self.version, path), params=params)
+            request = requests.post(self._full_path(object_name, self.version, path), data=params)
             response = self._check_response(request)
             return response
         except PardotAPIError as err:
@@ -93,10 +93,11 @@ class PardotAPI(object):
         """
         if params is None:
             params = {}
-        params.update({'user_key': self.user_key, 'api_key': self.api_key, 'format': 'json'})
+        params.update({'format': 'json'})
+        headers = self._build_auth_header()
         try:
             self._check_auth(object_name=object_name)
-            request = requests.get(self._full_path(object_name, self.version, path), params=params)
+            request = requests.get(self._full_path(object_name, self.version, path), params=params, headers=headers)
             response = self._check_response(request)
             return response
         except PardotAPIError as err:
@@ -163,3 +164,12 @@ class PardotAPI(object):
             return False
         except PardotAPIError:
             return False
+
+    def _build_auth_header(self):
+        """
+        Builds Pardot Authorization Header to be used with GET requests
+        """
+        if not self.user_key or not self.api_key:
+            raise Exception('Cannot build Authorization header. user or api key is empty')
+        auth_string = 'Pardot api_key=%s, user_key=%s' % (self.api_key, self.user_key)
+        return {'Authorization': auth_string}

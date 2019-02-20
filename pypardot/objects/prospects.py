@@ -228,4 +228,3 @@ class Prospects(object):
             params = {}
         response = self.client.post(object_name=object_name, path=path, params=params)
         return response
-
