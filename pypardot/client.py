@@ -72,12 +72,15 @@ class PardotAPI(object):
         """
         if params is None:
             params = {}
-        params.update({'user_key': self.user_key, 'api_key': self.api_key, 'format': 'json'})
+        params.update({'format': 'json'})
+        headers = {
+            'Authorization': f'Bearer {self.api_key}'
+        }
         if data is None:
             data = {}
         try:
             self._check_auth(object_name=object_name)
-            request = requests.post(self._full_path(object_name, self.version, path), params=params, data=data)
+            request = requests.post(self._full_path(object_name, self.version, path), params=params, data=data, headers=headers)
             response = self._check_response(request)
             return response
         except PardotAPIError as err:
@@ -95,10 +98,13 @@ class PardotAPI(object):
         """
         if params is None:
             params = {}
-        params.update({'user_key': self.user_key, 'api_key': self.api_key, 'format': 'json'})
+        params.update({'format': 'json'})
+        headers = {
+            'Authorization': f'Bearer {self.api_key}'
+        }
         try:
             self._check_auth(object_name=object_name)
-            request = requests.get(self._full_path(object_name, self.version, path), params=params)
+            request = requests.get(self._full_path(object_name, self.version, path), params=params, headers=headers)
             response = self._check_response(request)
             return response
         except PardotAPIError as err:
