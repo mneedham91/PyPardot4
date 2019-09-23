@@ -158,7 +158,10 @@ class PardotAPI(object):
         """
         try:
             auth = self.post('login', params={'email': self.email, 'password': self.password})
-            self.api_key = auth.get('api_key')
+            if type(auth) is int:
+                # sometimes the self.post method will return a status code instead of JSON response on failures
+                return False
+            self.api_key = auth.get('api_key', None)
             if self.api_key is not None:
                 return True
             return False
