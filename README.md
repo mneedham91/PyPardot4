@@ -120,7 +120,7 @@ Supported fields varies for each object. Check the [official Pardot API document
 p.prospects.create_by_email(email='joe@company.com', first_name='Joe', last_name='Schmoe')
 
 # Update a prospect field (works with default or custom field)
-p.prospects.update_field_by_id(id=23839663, field='company', field_value='Joes Plumbing')
+p.prospects.update_field_by_id(id=23839663, field_name='company', field_value='Joes Plumbing')
 
 # Send a one-off email
 p.emails.send_to_email(prospect_email='joe@company.com', email_template_id=123)
