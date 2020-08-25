@@ -10,6 +10,6 @@ setup(
     description="API wrapper for APIv4 of Pardot marketing automation software.",
     keywords="pardot",
     url="https://github.com/mneedham91/PyPardot4",
-    packages=['pypardot', 'pypardot.objects'],
+    packages=['pypardot', 'pypardot.objects', 'pypardot.objects_v3'],
     install_requires=['requests'],
 )

@@ -1,26 +1,4 @@
 import requests
-from .objects.accounts import Accounts
-from .objects.customfields import CustomFields
-from .objects.customredirects import CustomRedirects
-from .objects.dynamiccontent import DynamicContent
-from .objects.emailclicks import EmailClicks
-from .objects.emailtemplates import EmailTemplates
-from .objects.forms import Forms
-from .objects.lifecyclehistories import LifecycleHistories
-from .objects.lifecyclestages import LifecycleStages
-from .objects.lists import Lists
-from .objects.listmemberships import ListMemberships
-from .objects.emails import Emails
-from .objects.prospects import Prospects
-from .objects.opportunities import Opportunities
-from .objects.prospectaccounts import ProspectAccounts
-from .objects.tags import Tags
-from .objects.tagobjects import TagObjects
-from .objects.users import Users
-from .objects.visits import Visits
-from .objects.visitors import Visitors
-from .objects.visitoractivities import VisitorActivities
-from .objects.campaigns import Campaigns
 
 from .errors import PardotAPIError
 
@@ -41,28 +19,14 @@ class PardotAPI(object):
         self.user_key = user_key
         self.api_key = None
         self.version = version
-        self.accounts = Accounts(self)
-        self.campaigns = Campaigns(self)
-        self.customfields = CustomFields(self)
-        self.customredirects = CustomRedirects(self)
-        self.dynamiccontent = DynamicContent(self)
-        self.emailclicks = EmailClicks(self)
-        self.emails = Emails(self)
-        self.emailtemplates = EmailTemplates(self)
-        self.forms = Forms(self)
-        self.lifecyclehistories = LifecycleHistories(self)
-        self.lifecyclestages = LifecycleStages(self)
-        self.listmemberships = ListMemberships(self)
-        self.lists = Lists(self)
-        self.opportunities = Opportunities(self)
-        self.prospects = Prospects(self)
-        self.prospectaccounts = ProspectAccounts(self)
-        self.tags = Tags(self)
-        self.tagobjects = TagObjects(self)
-        self.users = Users(self)
-        self.visits = Visits(self)
-        self.visitors = Visitors(self)
-        self.visitoractivities = VisitorActivities(self)
+        self._load_objects()
+
+    def _load_objects(self):
+        if self.version == 3:
+            from .objects_v3 import load_objects
+        else:
+            from .objects import load_objects
+        load_objects(self)
 
     def post(self, object_name, path=None, params=None, retries=0):
         """
