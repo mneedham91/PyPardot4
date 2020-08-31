@@ -16,7 +16,7 @@ class TestLists(MyBaseTestCase):
 			results = self.pardot.lists.create(**self._data)
 			self._data['id'] = results['list']['id']
 		except PardotAPIError as e:
-			print "could not create list {}: {}".format(e.err_code, e.message)
+			print("could not create list {}: {}".format(e.err_code, e.message))
 			raise e
 
 	def tearDown(self):

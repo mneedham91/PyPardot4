@@ -56,10 +56,10 @@ class TestGenericOps(MyBaseTestCase):
 		method = 'query'
 		errors = {}
 
-		for obj_name in sorted(SUPPORTED_API_OPERATIONS.iterkeys()):
+		for obj_name in sorted(SUPPORTED_API_OPERATIONS.keys()):
 			ops = SUPPORTED_API_OPERATIONS[obj_name]
 			if method in set(ops):
-				print "[{}.{}]...".format(obj_name, method)
+				print("[{}.{}]...".format(obj_name, method))
 				obj = getattr(self.pardot, pluralize(obj_name).lower())
 				try:
 					results = getattr(obj, method)(id_greater_than='0')
@@ -70,12 +70,12 @@ class TestGenericOps(MyBaseTestCase):
 						key_name = 'visitor_activity'
 					results_length = len(results[key_name])
 					total = results['total_results']
-					print "[{}.{}] SUCCESS returned {} of {} total results".format(
-						obj_name, method, results_length, total)
+					print("[{}.{}] SUCCESS returned {} of {} total results".format(
+						obj_name, method, results_length, total))
 					self.assertTrue(total >= 0)
 				except PardotAPIError as err:
-					print "[{}.{}] API_ERROR {}".format(obj_name, method, err.message)
+					print("[{}.{}] API_ERROR {}".format(obj_name, method, err.message))
 					errors[obj_name] = err.message
 
-		if len(errors.keys()) > 0:
+		if len(list(errors.keys())) > 0:
 			self.assertTrue(False)

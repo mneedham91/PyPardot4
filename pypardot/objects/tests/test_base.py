@@ -97,7 +97,7 @@ class MyBaseTestCase(unittest.TestCase):
 
 	def init_object_data(self, field_map):
 		data = {}
-		for k, v in field_map.iteritems():
+		for k, v in field_map.items():
 			if k in set(['id', 'created_at', 'updated_at']):
 				continue
 			else:

@@ -20,7 +20,7 @@ class TestProspects(MyBaseTestCase):
 			results = self.pardot.prospects.create(**self._data)
 			self._data['id'] = results['prospect']['id']
 		except PardotAPIError as e:
-			print "could not create prospect {}: {}".format(e.err_code, e.message)
+			print("could not create prospect {}: {}".format(e.err_code, e.message))
 			raise e
 
 	def tearDown(self):
@@ -34,7 +34,7 @@ class TestProspects(MyBaseTestCase):
 	def _check_prospect(self, prosp):
 		prosp_arr = prosp if type(prosp) is list else [prosp]
 		for p in prosp_arr:
-			self.assertEquals(self._data['email'], p['email'])
+			self.assertEqual(self._data['email'], p['email'])
 
 	# upserts / updates change these values
 	# self.assertEquals(self._data['first_name'], p['first_name'])
@@ -65,8 +65,8 @@ class TestProspects(MyBaseTestCase):
 		results = self.pardot.prospects.update_by_id(
 			id=self._data['id'], last_name='McGee',
 			website='http://www.yahoo.com')
-		self.assertEquals('McGee', results['prospect']['last_name'])
-		self.assertEquals('http://www.yahoo.com', results['prospect']['website'])
+		self.assertEqual('McGee', results['prospect']['last_name'])
+		self.assertEqual('http://www.yahoo.com', results['prospect']['website'])
 
 	def test_prospect_upsert_delete(self):
 		with self.assertRaises(PardotAPIArgumentError):
@@ -77,16 +77,16 @@ class TestProspects(MyBaseTestCase):
 		results = self.pardot.prospects.upsert_by_email(
 			id=self._data['id'], email=self._data['email'],
 			first_name='Billy')
-		self.assertEquals('Billy', results['prospect']['first_name'])
+		self.assertEqual('Billy', results['prospect']['first_name'])
 
 		results = self.pardot.prospects.upsert_by_id(id=self._data['id'], first_name='Bob')
-		self.assertEquals('Bob', results['prospect']['first_name'])
+		self.assertEqual('Bob', results['prospect']['first_name'])
 
 		data_copy = self._data.copy()
 		data_copy['email'] = 'macaw@harbles.com'
 		new_results = self.pardot.prospects.upsert_by_email(email=data_copy['email'], first_name='Johnny')
-		self.assertEquals('Johnny', new_results['prospect']['first_name'])
-		self.assertEquals('macaw@harbles.com', new_results['prospect']['email'])
+		self.assertEqual('Johnny', new_results['prospect']['first_name'])
+		self.assertEqual('macaw@harbles.com', new_results['prospect']['email'])
 		self.assertTrue(self._data['id'] != new_results['prospect']['id'])
 
 		with self.assertRaises(PardotAPIArgumentError):
@@ -106,17 +106,17 @@ class TestProspects(MyBaseTestCase):
 		for result in results['prospect']:
 			total = total + 1
 			if result['id'] == self._data['id']:
-				print "SKIPPING TEST RECORD------"
+				print("SKIPPING TEST RECORD------")
 				continue
 			if not result['email'].endswith('@harbles.com'):
 				not_test_total = not_test_total + 1
-				print('NON-TEST REC ID: {}, Email: {}, Website: {}'.format(
-					result['id'], result['email'], result['website']))
+				print(('NON-TEST REC ID: {}, Email: {}, Website: {}'.format(
+					result['id'], result['email'], result['website'])))
 			else:
 				# ensure all existing prospect test accounts are removed
 				test_total = test_total + 1
-				print('TEST REC ID: {}, Email: {}, Website: {}'.format(
-					result['id'], result['email'], result['website']))
+				print(('TEST REC ID: {}, Email: {}, Website: {}'.format(
+					result['id'], result['email'], result['website'])))
 				try:
 					delete_res = self.pardot.prospects.delete_by_id(id=result['id'])
 					self.assertTrue(delete_res)
@@ -124,5 +124,5 @@ class TestProspects(MyBaseTestCase):
 					if e.err_code != 4:
 						raise e
 
-		print "nontest {}, test {}, total {}".format(not_test_total, test_total, total)
+		print("nontest {}, test {}, total {}".format(not_test_total, test_total, total))
 		self.assertTrue(True)
