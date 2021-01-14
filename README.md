@@ -1,3 +1,134 @@
+# PyPardotSF
+
+PyPardotSF is yet another fork of PyPardot/PyPardot4. The main driver for the
+fork is to address
+[Pardot's authentication change](https://help.salesforce.com/articleView?id=000353746) in Sprint 2021 to use
+Salesforce OAuth.
+(As seen on [PyPardot4 Issue #46](https://github.com/mneedham91/PyPardot4/issues/46))
+
+Another new features of PyPardotSF includes:
+
+- Support both Versions 3 & 4 of Pardot API
+- Support Version 3 [Import API (for Prospects)](https://developer.pardot.com/kb/api-version-3/import/)
+
+This is a working prototype and the code is currently being cleaned up and
+more detailed documentation is underway.
+
+I'm keeping the original MIT License by the previous contributors.
+Any contributions, including code, documentations, issue reporting are welcome.
+
+## Install
+
+```
+pip install PyPardotSF
+```
+
+## Salesforce OAuth
+
+### Get keys and tokens
+
+```
+from pypardot.client import PardotAPI
+p = PardotAPI()
+p.setup_salesforce_auth_keys()
+```
+
+Then follow the instruction in the command line to get the keys and
+refresh token.
+
+### Using the API client
+
+```
+from pypardot.client import PardotAPI
+
+version = 3  # 3 or 4
+sf_consumer_key = "xxxx"
+sf_consumer_secret = "yyyy"
+sf_refresh_token = "zzzz"
+business_unit_id = "0Uv*****"
+
+CLIENT = PardotAPI(
+    sf_consumer_key=sf_consumer_key,
+    sf_consumer_secret=sf_consumer_secret,
+    sf_refresh_token=sf_refresh_token,
+    business_unit_id=business_unit_id,
+    version=version)
+p.prospects.read_by_email(email="daigo@anelen.co")
+```
+
+## Bulk Prospect Import (Ver 3 API only)
+
+```
+file_name = "data.csv"
+columns = [
+    {
+        "field": "email"
+    },
+    {
+        "field": "pardot_field_a",
+        "overwrite": False,
+        "nullOverwrite": False
+    },
+    {
+        "field": "pardot_field_b",
+        "overwrite": False,
+        "nullOverwrite": False
+    },
+}
+results = client.importapi.create(
+    file_name=file_name,
+    operation="Upsert",
+    object="Prospect",
+    columns=columns,
+    restoreDeleted=config.get("restore_deleted", False),
+    )
+batch_id = results["id"]
+results = client.importapi.update(id=batch_id, state="Ready")
+```
+
+Check the import status at:
+
+API Imports section at 
+[Admin->Import->Prospects](https://pi.pardot.com/import/wizardStep1)
+
+## Other endpoints
+
+Please see the original
+[PyPardot](https://github.com/joshgeller/PyPardot) /
+[PyPardot4](https://github.com/mneedham91/PyPardot4)
+docs.
+
+## Contributors wanted
+
+My (Daigo Tanaka) access to Pardot may not be permanent and I curently have
+access to Ver 3 API. So I would like this repository to be collaborative as
+possible with the active Python programmers who uses Pardot API. This includes
+the release process. I don't want to be a gate-keeper or a blocker.
+
+Any bug fixes and enhancements are welcome and I trust your good intentions.
+Together with the fellow contributors, I will help review the code from
+good design and coding stand point, but I may not be able to run tests myself
+for the reason I stated above. So please DO include the following sections
+in your pull requests:
+
+1. Reason for code modification. Include GitHub Issue # (create if not exists)
+2. Supporting API version (3, 4 or both)
+3. Manual test description: Method and result.
+4. Risks of change.
+
+## Code of Conduct
+
+Please read and acknowledge our
+[Code of Conduct](https://github.com/anelendata/PyPardotSF/blob/master/CODE_OF_CONDUCT.md).
+before using or contributing to this project.
+
+## Related projects
+
+- target-pardot: A singer.io specification that bulk-updates prospect records
+  to Pardot. The program uses PyPardotSF.
+
+Below is the README from the original PyPardot4 by Matt Needham, as of this [commit](5b26b871b7d4f6385755b2f3737a299509659ce1).
+
 PyPardot4
 =========
 

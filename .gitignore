@@ -1,14 +1,25 @@
-# Python byte code files
+venv
+.env
+install_test
+
+# Distribution / packaging
+.Python
 *.pyc
+env/
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+*.egg-info/
+.installed.cfg
+*.egg
 
-# Emacs save files
-*~
-
-# OSX directory meta files
-.DS_Store
-
-# Python egg metadata
-*.egg-info
-
-# PyCharm / Jetbrains IDE
-.idea
+# Serverless directories
+.serverless

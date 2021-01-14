@@ -1,0 +1,13 @@
+#!/bin/bash
+
+./tests/install_test.sh &&
+
+python3 setup.py clean --all
+rm -fr dist
+rm -fr build
+rm -fr *.egg-info
+python3 setup.py sdist bdist_wheel
+
+# test
+# python3 -m twine upload --repository testpypi dist/*
+twine upload dist/*
