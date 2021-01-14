@@ -47,7 +47,7 @@ sf_consumer_secret = "yyyy"
 sf_refresh_token = "zzzz"
 business_unit_id = "0Uv*****"
 
-CLIENT = PardotAPI(
+p = PardotAPI(
     sf_consumer_key=sf_consumer_key,
     sf_consumer_secret=sf_consumer_secret,
     sf_refresh_token=sf_refresh_token,
