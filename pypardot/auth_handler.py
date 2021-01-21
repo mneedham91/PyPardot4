@@ -24,6 +24,9 @@ class AuthHandler(Generic[T]):
     def auth_header(self) -> Dict:
         raise NotImplementedError(f"auth_header() called on abstract base class {self.__class__}")
 
+    def __repr__(self):
+        return f"{self.__class__.__name__}"
+
 
 class UserAuthHandler(AuthHandler[T]):
     """Abstract base class for handling authentication that requires a username and password"""
@@ -32,6 +35,14 @@ class UserAuthHandler(AuthHandler[T]):
         super().__init__(**kwargs)
         self.username = username
         self.password = password
+
+    def __repr__(self):
+        return f"{super().__repr__()}: UN:{self.username[:10]}..."
+
+    def get_userkey(self) -> Optional[str]:
+        raise NotImplementedError(
+            f"get_userkey() called on abstract base class {self.__class__}")
+
 
     def handle_authentication(self) -> bool:
         raise NotImplementedError(
@@ -42,12 +53,20 @@ class UserAuthHandler(AuthHandler[T]):
             f"auth_header() called on {self.__class__}.  Should be handled by PardotAPI")
 
 
+
 class TraditionalAuthHandler(UserAuthHandler[T]):
     """Handles authentication of Pardot-only users"""
 
     def __init__(self, username: str, password: str, userkey: str, **kwargs) -> None:
         super().__init__(username=username, password=password, **kwargs)
         self.userkey = userkey
+
+    def __repr__(self):
+        return f"{super().__repr__()}, UK:{self.userkey[:10]}..."
+
+    def get_userkey(self) -> Optional[str]:
+        return self.userkey
+
 
 
 class OAuthHandler(UserAuthHandler[T]):
@@ -67,6 +86,15 @@ class OAuthHandler(UserAuthHandler[T]):
         self.is_sandbox = is_sandbox
         self.access_token: Optional[str] = None
 
+    def __repr__(self):
+        at_label = f"{self.access_token[:10]}..." if self.access_token else "None"
+        return f"{super().__repr__()}, CK:{self.consumer_key[:10]}..., CS:{self.consumer_secret[:10]}..., " \
+               f"BU:{self.business_unit_id} AT:{at_label}"
+
+
+    def get_userkey(self) -> Optional[str]:
+        return None
+
     def handle_authentication(self) -> bool:
         params = {
             "grant_type": "password",
@@ -80,7 +108,7 @@ class OAuthHandler(UserAuthHandler[T]):
         r = requests.post(url, params=params)
         content = r.json()
         self.access_token = content.get("access_token")
-        self.logger and self.logger.debug(f"Retrieved oauth access_token for {content.get('instance_url')}")
+        self.logger and self.logger.debug(f"OAuthHandler: Retrieved oauth access_token for {content.get('instance_url')}")
         return True
 
     def auth_header(self) -> Dict:

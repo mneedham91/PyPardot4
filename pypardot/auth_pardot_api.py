@@ -17,7 +17,7 @@ from typing import Optional, cast
 
 import requests
 
-from auth_handler import AuthHandler, UserAuthHandler, OAuthHandler
+from auth_handler import AuthHandler, UserAuthHandler, OAuthHandler, TraditionalAuthHandler
 from client import PardotAPI
 from errors import PardotAPIError
 
@@ -25,20 +25,20 @@ from errors import PardotAPIError
 class AuthPardotAPI(PardotAPI):
 
     def __init__(self, auth_handler: UserAuthHandler, version=4, logger: Optional[Logger] = None):
-        super().__init__(auth_handler.username, auth_handler.password, auth_handler.userkey, version)
+        super().__init__(auth_handler.username, auth_handler.password, auth_handler.get_userkey(), version)
         self.auth_handler: Optional[AuthHandler] = auth_handler
         self.logger = logger
 
     def use_username_authorization(self) -> bool:
-        return self.auth_handler is None
+        return self.auth_handler is None or isinstance(self.auth_handler, TraditionalAuthHandler)
 
     def authenticate(self):
         if self.use_username_authorization():
-            self.logger and self.logger.debug(f"Authenticate Pardot with user {self.email}")
+            self.logger and self.logger.debug(f"AuthPardotAPI: Authenticate Pardot with Pardot-Only user {self.email[:10]}...")
             return super().authenticate()
         else:
-            oauth_handler: OAuthHandler = cast(self.auth_handler, OAuthHandler)
-            self.logger and self.logger.debug(f"Authenticate Pardot with OAuth2 key {oauth_handler.consumer_key}")
+            oauth_handler: OAuthHandler = cast(OAuthHandler, self.auth_handler)
+            self.logger and self.logger.debug(f"AuthPardotAPI: Authenticate Pardot with OAuth2 key {oauth_handler.consumer_key[:10]}...")
             success = self.auth_handler.handle_authentication()
             return success
 
@@ -55,9 +55,9 @@ class AuthPardotAPI(PardotAPI):
 
         params = {} if params is None else params
         params.update({'format': 'json'})
-        headers = self._build_auth_header()
         try:
             self._check_auth(object_name=object_name)
+            headers = self._build_auth_header()
             request = requests.post(self._full_path(object_name, self.version, path), data=params, headers=headers)
             response = self._check_response(request)
             return response
@@ -78,10 +78,7 @@ class AuthPardotAPI(PardotAPI):
         if self.use_username_authorization():
             return super()._check_auth(object_name)
 
-        if object_name == 'login':
-            return
-
-        oauth_handler: OAuthHandler = cast(self.auth_handler, OAuthHandler)
+        oauth_handler: OAuthHandler = cast(OAuthHandler, self.auth_handler)
         if oauth_handler.access_token is None:
             self.authenticate()
 
@@ -89,7 +86,7 @@ class AuthPardotAPI(PardotAPI):
         if self.use_username_authorization():
             return super()._build_auth_header()
 
-        oauth_handler: OAuthHandler = cast(self.auth_handler, OAuthHandler)
+        oauth_handler: OAuthHandler = cast(OAuthHandler, self.auth_handler)
         if not oauth_handler.access_token:
             raise Exception('Cannot build Authorization header.  access_token or bus_unit_id is empty')
         return oauth_handler.auth_header()
