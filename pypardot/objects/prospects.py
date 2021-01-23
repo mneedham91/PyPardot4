@@ -1,4 +1,4 @@
-from ..errors import PardotAPIArgumentError
+from errors import PardotAPIArgumentError
 
 
 class Prospects(object):
@@ -94,7 +94,7 @@ class Prospects(object):
             raise PardotAPIArgumentError('id is required to read a prospect.')
         response = self._post(path='/do/read/id/{id}'.format(id=id), params=kwargs)
         return response
-    
+
     def read_by_fid(self, fid=None, **kwargs):
         """
         Returns data for the prospect specified by <fid>. <fid> must be a valid CRM FID.

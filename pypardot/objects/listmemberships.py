@@ -1,4 +1,4 @@
-from ..errors import PardotAPIArgumentError
+from errors import PardotAPIArgumentError
 
 
 class ListMemberships(object):
