@@ -127,10 +127,21 @@ before using or contributing to this project.
 - target-pardot: A singer.io specification that bulk-updates prospect records
   to Pardot. The program uses PyPardotSF.
 
-Below is the README from the original PyPardot4 by Matt Needham, as of this [commit](5b26b871b7d4f6385755b2f3737a299509659ce1).
+# About this project
+
+This project is developed by 
+ANELEN and friends. Please check out the ANELEN's
+[open innovation philosophy and other projects](https://anelen.co/open-source.html)
+
+![ANELEN](https://avatars.githubusercontent.com/u/13533307?s=400&u=a0d24a7330d55ce6db695c5572faf8f490c63898&v=4)
+---
+
+Copyright &copy; 2020~ Anelen Co., LLC
 
 PyPardot4
 =========
+
+*This is README from the original PyPardot4 by Matt Needham, as of this [commit](5b26b871b7d4f6385755b2f3737a299509659ce1).*
 
 PyPardot was originally created by Josh Geller as a wrapper for Version 3 of the Pardot API.
 I, Matt Needham, have edited PyPardot for compatibility with Version 4 of the Pardot API.
