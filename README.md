@@ -27,9 +27,13 @@ pip install PyPardotSF
 
 ### Get keys and tokens
 
-1. Do this once when you do not have consumer key, secret, refresh token:
+Do this once when you do not have consumer key, secret, refresh token:
+
+1. Open Python's interactive shell and run the following command:
 
 ```
+$ python3
+
 >>> from pypardot.client import PardotAPI
 >>> p = PardotAPI()
 >>> p.setup_salesforce_auth_keys(version=3)  # verion=4 available
@@ -45,7 +49,8 @@ access API commands:
 >>> p.prospects.read_by_email(email="daigo@anelen.co")
 ```
 
-4. You can check the values of business unit id, consumer key, secret,
+4. You can check the values of business unit id, consumer key, secret, and
+refresh token:
 
 ```
 >>> p.business_unit_id
