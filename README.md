@@ -35,8 +35,8 @@ Do this once when you do not have consumer key, secret, refresh token:
 $ python3
 
 >>> from pypardot.client import PardotAPI
->>> p = PardotAPI()
->>> p.setup_salesforce_auth_keys(version=3)  # verion=4 available
+>>> p = PardotAPI(version=3)  # verion=4 available
+>>> p.setup_salesforce_auth_keys()
 ```
 
 2. Follow the instruction in the command line to get the keys and
