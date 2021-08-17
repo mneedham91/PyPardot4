@@ -77,5 +77,5 @@ class TestGenericOps(MyBaseTestCase):
 					print("[{}.{}] API_ERROR {}".format(obj_name, method, err.message))
 					errors[obj_name] = err.message
 
-		if len(list(errors.keys())) > 0:
+		if len(errors.keys()) > 0:
 			self.assertTrue(False)

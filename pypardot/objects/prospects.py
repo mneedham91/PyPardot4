@@ -19,7 +19,7 @@ class Prospects(object):
 
         # Ensure result['prospect'] is a list, no matter what.
         result = response.get('result')
-        if 'output' not in list(kwargs.keys()) and 'bulk' not in list(kwargs.values()):
+        if 'output' not in kwargs.keys() and 'bulk' not in kwargs.values():
             if result['total_results'] == 0:
                 result['prospect'] = []
             elif result['total_results'] == 1:
@@ -94,7 +94,7 @@ class Prospects(object):
             raise PardotAPIArgumentError('id is required to read a prospect.')
         response = self._post(path='/do/read/id/{id}'.format(id=id), params=kwargs)
         return response
-    
+
     def read_by_fid(self, fid=None, **kwargs):
         """
         Returns data for the prospect specified by <fid>. <fid> must be a valid CRM FID.
