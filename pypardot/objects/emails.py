@@ -13,7 +13,7 @@ class Emails(object):
         Required parameters: (email_template_id OR (text_content, name, subject, & ((from_email & from_name) OR from_user_id)))
         """
         response = self._post(
-            path='/do/send/prospect_email/{prospect_email}'.format(prospect_email=prospect_email),
+            path='/do/send/prospect_email/{prospect_email}?format=json'.format(prospect_email=prospect_email),
             params=kwargs)
         return response
 

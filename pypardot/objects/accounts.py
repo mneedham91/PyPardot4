@@ -11,7 +11,7 @@ class Accounts(object):
         """
         Returns the data for the account of the currently logged in user.
         """
-        response = self._post(path='/do/read/id/{id}'.format(id=id), params=kwargs)
+        response = self._post(path='/do/read/id/{id}?format=json'.format(id=id), params=kwargs)
         return response
 
     def _get(self, object_name='account', path=None, params=None):

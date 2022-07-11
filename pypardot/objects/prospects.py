@@ -15,7 +15,7 @@ class Prospects(object):
         Returns the prospects matching the specified criteria parameters.
         Supported search criteria: http://developer.pardot.com/kb/api-version-4/prospects/#supported-search-criteria
         """
-        response = self._get(path='/do/query', params=kwargs)
+        response = self._get(path='/do/query?format=json', params=kwargs)
 
         # Ensure result['prospect'] is a list, no matter what.
         result = response.get('result')

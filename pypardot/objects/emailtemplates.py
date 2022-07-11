@@ -15,7 +15,7 @@ class EmailTemplates(object):
         """
         if not emailTemplateID:
             raise PardotAPIArgumentError('email template id is required to read an email template.')
-        response = self._post(path='/do/read/id/{emailTemplateID}'.format(emailTemplateID=emailTemplateID), params=kwargs)
+        response = self._post(path='/do/read/id/{emailTemplateID}?format=json'.format(emailTemplateID=emailTemplateID), params=kwargs)
         return response
 
     def listOneToOne(self, **kwargs):

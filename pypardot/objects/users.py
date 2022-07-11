@@ -12,7 +12,7 @@ class Users(object):
         Returns the users matching the specified criteria parameters.
         Supported search criteria: http://developer.pardot.com/kb/api-version-4/users/#supported-search-criteria
         """
-        response = self._get(path='/do/query', params=kwargs)
+        response = self._get(path='/do/query?format=json', params=kwargs)
 
         # Ensure result['users'] is a list, no matter what.
         result = response.get('result')

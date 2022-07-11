@@ -12,7 +12,7 @@ class Tags(object):
         Returns the tag matching the specified criteria parameters.
         Supported search criteria: http://developer.pardot.com/kb/api-version-4/tags/#supported-search-criteria
         """
-        response = self._get(path='/do/query', params=kwargs)
+        response = self._get(path='/do/query?format=json', params=kwargs)
 
         # Ensure result['tag'] is a list, no matter what.
         result = response.get('result')
