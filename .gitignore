@@ -12,3 +12,6 @@
 
 # PyCharm / Jetbrains IDE
 .idea
+
+build/
+dist/
