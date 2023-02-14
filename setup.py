@@ -11,5 +11,5 @@ setup(
     keywords="pardot",
     url="https://github.com/mneedham91/PyPardot4",
     packages=['pypardot', 'pypardot.objects'],
-    install_requires=['requests'],
+    install_requires=['requests', 'build', 'twine'],
 )

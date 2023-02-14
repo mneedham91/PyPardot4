@@ -144,3 +144,19 @@ try:
 except PardotAPIError, e:
   print(e)
 ```
+
+### Building
+
+To build a distributable wheel (`.whl`) file, to the following:
+
+Install an appropriate python interpreter, preferably 3.7 or later.
+
+```bash
+$ python3 -m venv env
+$ . env/bin/activate
+$ pip install .
+$ python -m build
+```
+
+The last command will add two directories. Look in the `dist` directory and you will have your distributable library
+files.
