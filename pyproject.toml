@@ -1,3 +1,19 @@
 [build-system]
 requires = ["setuptools", "setuptools-scm"]
 build-backend = "setuptools.build_meta"
+
+[project]
+name = "PyPardot4"
+version = "1.1.13"
+authors = [
+    {name="Matthew M. Needham", email="matthew.m.needham@gmail.com"}
+]
+description = "API wrapper for APIv4 of Pardot marketing automation software."
+readme = "README.md"
+requires-python = ">=3.7"
+dependencies = [
+    "requests"
+]
+
+[project.urls]
+"Homepage" = "https://github.com/mneedham91/PyPardot4"

@@ -155,6 +155,7 @@ Install an appropriate python interpreter, preferably 3.7 or later.
 $ python3 -m venv env
 $ . env/bin/activate
 $ pip install .
+$ pip install build
 $ python -m build
 ```
 
