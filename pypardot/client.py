@@ -48,8 +48,18 @@ class PardotAPI(object):
     3. Type 'app manager' and select App Manager from the Quick Find on the left pane
        (If you cannot see App Manager, follow this: https://help.salesforce.com/articleView?id=000322274&type=1&mode=1 )
     5. Click on the New Connected App (in the upper right corner).
-    6. On the New Connected App page, fill the following required fields under Basic Information: Connected App Name, API Name and Contact Email.
-    7. Go to API (Enable OAuth Settings), and select Enable OAuth Settings. In the Callback URL field, enter https://login.salesforce.com/. In the Selected OAuth Scopes field, select Access and manage your data (api), Perform requests on your behalf at any time (refresh_token, offline_access), Provide access to your data via the Web (web), Access Pardot services (pardot_api), and then click Add.
+    6. On the New Connected App page, fill the following required fields under Basic Information:
+        - Connected App Name
+        - API Name
+        - Contact Email.
+    7. Go to API (Enable OAuth Settings), and select Enable OAuth Settings.
+        - In the Callback URL field, enter https://login.salesforce.com/
+        - In the Selected OAuth Scopes field, select:
+            - Access and manage your data (api)
+            - Perform requests on your behalf at any time (refresh_token, offline_access)
+            - Provide access to your data via the Web (web)
+            - Access Pardot services (pardot_api)
+          and then click Add.
     8. Click the Save button to save the new Connected App.
     Credit: Instruction adopted from https://medium.com/@bpmmendis94/obtain-access-refresh-tokens-from-salesforce-rest-api-a324fe4ccd9b#:~:text=In%20the%20left%2Dhand%20pane,and%20select%20Enable%20OAuth%20Settings""")
         if not instance_id:
