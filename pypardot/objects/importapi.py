@@ -3,7 +3,7 @@ import json
 class Import(object):
     """
     A class to query and use Pardot Import API.
-    Import API reference: https://developer.salesforce.com/docs/marketing/pardot/guide/import-v3.html
+    Import API reference: https://developer.salesforce.com/docs/marketing/pardot/guide/import-v4.html
     """
 
     def __init__(self, client):

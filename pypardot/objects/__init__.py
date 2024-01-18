@@ -5,6 +5,7 @@ from .dynamiccontent import DynamicContent
 from .emailclicks import EmailClicks
 from .emailtemplates import EmailTemplates
 from .forms import Forms
+from .importapi import Import
 from .lifecyclehistories import LifecycleHistories
 from .lifecyclestages import LifecycleStages
 from .lists import Lists
@@ -32,6 +33,7 @@ def load_objects(client):
     client.emails = Emails(client)
     client.emailtemplates = EmailTemplates(client)
     client.forms = Forms(client)
+    client.importapi = Import(client)
     client.lifecyclehistories = LifecycleHistories(client)
     client.lifecyclestages = LifecycleStages(client)
     client.listmemberships = ListMemberships(client)

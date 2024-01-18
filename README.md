@@ -1,15 +1,14 @@
 # PyPardotSF
 
 PyPardotSF is yet another fork of PyPardot/PyPardot4. The main driver for the
-fork is to address
-[Pardot's authentication change](https://help.salesforce.com/articleView?id=000353746) in Sprint 2021 to use
+fork is to address Pardot's authentication change in Spring 2021 to use
 Salesforce OAuth.
 (As seen on [PyPardot4 Issue #46](https://github.com/mneedham91/PyPardot4/issues/46))
 
 Another new features of PyPardotSF includes:
 
 - Support both Versions 3 & 4 of Pardot API
-- Support Version 3 [Import API (for Prospects)](https://developer.pardot.com/kb/api-version-3/import/)
+- Support Version 3 & 4 [Import API (for Prospects)](https://developer.salesforce.com/docs/marketing/pardot/guide/import-v4.html)
 
 This is a working prototype and the code is currently being cleaned up and
 more detailed documentation is underway.
@@ -86,7 +85,7 @@ p = PardotAPI(
 p.prospects.read_by_email(email="daigo@anelen.co")
 ```
 
-## Bulk Prospect Import (Ver 3 API only)
+## Bulk Prospect Import
 
 ```
 file_name = "data.csv"
